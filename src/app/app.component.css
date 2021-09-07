@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.todo-form {
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.todo-form div {
+  width: 100%;
+  display: flex;
+}
+
+.todo-form input {
+  width: 100%;
+}
+
+.todo-list > li {
+  margin-top: 5px;
+}
+
+.todo-list > li > div {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  height: 40px
+}
+
+.todo-list-actions {
+  position: absolute;
+  right: 0
+}
+
+.todo-list button {
+  margin-left: 5px;
+}

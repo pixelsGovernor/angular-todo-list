@@ -47,10 +47,16 @@ export class AppComponent {
     const todo = new Todo(Guid.create(), group, title, description, link, false);
     if (group && group.length) {
       if (!this.groups.includes(group)) { this.groups.push(group); }
-      this.todosByGroup[group] = [todo];
+      this.todosByGroup[group] = (this.todosByGroup[group] || []).concat([todo]);
     } else {
-      if (!this.todosByGroup.none) { this.todosByGroup.none = [todo]; } else { this.todosByGroup.none.push(todo); }
+      if (!this.todosByGroup.none) {
+        this.todosByGroup.none = [todo];
+      } else {
+        this.todosByGroup.none.push(todo);
+      }
+      if (!this.groups.includes("none")) this.groups.push("none");
     }
+
     this.todos.push(todo);
     form.resetForm();
     this.onSaveData();
@@ -74,7 +80,7 @@ export class AppComponent {
   }
 
   onDelete(id: Guid, group: string) {
-    if (group) {
+    if (group && group.length > 0) {
       const itemsWithThatGroup = this.todos.filter(todo => todo.group === group).length;
       if (itemsWithThatGroup === 1) {
         this.groups = this.groups.filter(groupSaved => groupSaved !== group);
@@ -85,6 +91,7 @@ export class AppComponent {
     } else {
       if (this.todosByGroup.none.length === 1) {
         delete this.todosByGroup.none;
+        this.groups = this.groups.filter(groupSaved => groupSaved !== "none");
       } else {
         this.todosByGroup.none = this.todosByGroup.none.filter(item => item.id !== id);
       }
